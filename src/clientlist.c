@@ -4,13 +4,13 @@
 
 void ClientList_EventCallBack(RedisModuleCtx *ctx, RedisModuleEvent eid, uint64_t subevent, void *data) {
     RedisModuleClientInfo *client_info = (RedisModuleClientInfo *) data;
+
     if (subevent == REDISMODULE_SUBEVENT_CLIENT_CHANGE_CONNECTED) {
-        printf("Connected: %s:%d (clientId=%lld, flags=%lld)\n", client_info->addr, client_info->port, client_info->id, client_info->flags);
-        fflush(stdout);
+        RedisModule_Log(ctx, REDISMODULE_LOGLEVEL_NOTICE, "Connected: %s:%d (clientId=%lld, flags=%lld)\n", client_info->addr, client_info->port, client_info->id, client_info->flags);
     } else if (subevent == REDISMODULE_SUBEVENT_CLIENT_CHANGE_DISCONNECTED) {
-        printf("Disconnected: %s:%d(clientId=%lld, flags=%lld)\n", client_info->addr, client_info->port, client_info->id, client_info->flags);
-        fflush(stdout);
+        RedisModule_Log(ctx, REDISMODULE_LOGLEVEL_NOTICE, "Disconnected: %s:%d(clientId=%lld, flags=%lld)\n", client_info->addr, client_info->port, client_info->id, client_info->flags);
     }
+    fflush(stdout);
 }
 
 int RedisModule_OnLoad(RedisModuleCtx *ctx, RedisModuleString **argv, int argc) {
