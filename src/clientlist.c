@@ -1,6 +1,4 @@
 #include "redismodule.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void ClientList_EventCallBack(RedisModuleCtx *ctx, RedisModuleEvent eid, uint64_t subevent, void *data) {
     RedisModuleClientInfo *client_info = (RedisModuleClientInfo *) data;
@@ -10,7 +8,6 @@ void ClientList_EventCallBack(RedisModuleCtx *ctx, RedisModuleEvent eid, uint64_
     } else if (subevent == REDISMODULE_SUBEVENT_CLIENT_CHANGE_DISCONNECTED) {
         RedisModule_Log(ctx, REDISMODULE_LOGLEVEL_NOTICE, "Disconnected: %s:%d(clientId=%lld, flags=%lld)\n", client_info->addr, client_info->port, client_info->id, client_info->flags);
     }
-    fflush(stdout);
 }
 
 int RedisModule_OnLoad(RedisModuleCtx *ctx, RedisModuleString **argv, int argc) {
